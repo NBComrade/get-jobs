@@ -21,7 +21,8 @@ class DefaultController extends Controller
         $gitHub = $sender->sendRequest($request, function (ResponseInterface $response) {
             return 'I completed! ' . $response->getBody();
         });
-
-        return new Response($gitHub);
+        $parser = $this->get('app.parser');
+        $title = $parser->parseContent($gitHub);
+        return new Response($title);
     }
 }

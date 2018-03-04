@@ -33,6 +33,10 @@ services:
         class: GuzzleHttp\Client
         public: true
 
+    symfony.crawler:
+        class: Symfony\Component\DomCrawler\Crawler
+        public: true
+
     app.sender:
         class: AppBundle\Service\Sender
         public: true
@@ -41,3 +45,4 @@ services:
     app.parser:
         class: AppBundle\Service\Parser
         public: true
+        arguments: ["@symfony.crawler"]
