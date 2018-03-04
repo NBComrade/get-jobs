@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Contracts;
+namespace AppBundle\Contract;
 
 interface ParserInterface
 {

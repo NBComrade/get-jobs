@@ -2,7 +2,7 @@
 
 namespace AppBundle\Service;
 
-use AppBundle\Contracts\SenderInterface;
+use AppBundle\Contract\SenderInterface;
 use GuzzleHttp\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 

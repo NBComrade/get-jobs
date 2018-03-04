@@ -1,7 +1,7 @@
 <?php
 namespace AppBundle\Service;
 
-use AppBundle\Contracts\ParserInterface;
+use AppBundle\Contract\ParserInterface;
 
 class Parser implements ParserInterface
 {
