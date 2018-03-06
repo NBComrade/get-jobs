@@ -2,12 +2,25 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <title>{% block title %}Parse perfect job!{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+            <style>
+                body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
+            </style>
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        <header class="text-center pt-4 pb-4">
+            <h1 class="main-header">Hi! Are you ready for parsing?</h1>
+        </header>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <footer>
+
+        </footer>
+        {% block javascripts %}
+            <script src="{{ asset('build/app.js') }}"></script>
+        {% endblock %}
     </body>
 </html>

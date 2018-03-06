@@ -1,0 +1,27 @@
+header{
+  .main-header{
+    font-weight: bold;
+    font-size: 3.5em;
+  }
+}
+
+// Adaptive
+@media (max-width: 576px) {
+
+}
+
+@media (max-width: 768px) {
+  header{
+    .main-header{
+      font-size: 2.5em;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+
+}
+
+@media (max-width: 1200px) {
+
+}
