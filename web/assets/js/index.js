@@ -1,3 +1,3 @@
 require('../css/main.scss');
-
-console.log("Hello world!");
+require('../../../node_modules/bootstrap/dist/css/bootstrap.min.css');
+require('../../../node_modules/bootstrap/dist/js/bootstrap.min.js');
