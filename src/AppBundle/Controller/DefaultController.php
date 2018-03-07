@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\ParseData;
+use AppBundle\Form\ParseForm;
 use Psr\Http\Message\ResponseInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -13,11 +15,18 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="app.homepage")
-     * @Method({"GET"})
+     * @Method({"GET", "POST"})
      */
     public function indexAction(Request $request) : Response
     {
-       return $this->render('default/index.html.twig');
+        $parseForm = new ParseData();
+        $form = $this->createForm(ParseForm::class, $parseForm);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data= $form->getData();
+        }
+        return $this->render('default/index.html.twig', ['form' => $form->createView()]);
     }
 
     /**
