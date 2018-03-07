@@ -22,17 +22,21 @@ class DefaultController extends Controller
 
     /**
      * @Route("/parse", name="app.parse-data")
-     * @Method({"POST"})
      */
     public function parseAction(Request $request)
     {
-        return dump($request);
-//        $sender = $this->get('app.sender');
-//        $request = new \GuzzleHttp\Psr7\Request('GET', 'https://work.ua/');
-//        $gitHub = $sender->sendRequest($request, function (ResponseInterface $response) {
-//            return 'I completed! ' . $response->getBody();
-//        });
-//
-//        return new Response($gitHub);
+        $sender = $this->get('app.sender');
+        $searchQuery = $request->get('search');
+        $city = $request->get('city');
+        //selector .card.job-link
+        $queryString = 'jobs-' . $city . '-' . $searchQuery;
+        $parseRequest = new \GuzzleHttp\Psr7\Request('GET', 'https://work.ua/' . $queryString);
+        $content = $sender->sendRequest($parseRequest, function (ResponseInterface $response) {
+            return $response->getBody();
+        });
+        $parser = $this->get('app.parser');
+        $gitHub = $parser->parseContent($content);
+
+        return new Response($gitHub);
     }
 }

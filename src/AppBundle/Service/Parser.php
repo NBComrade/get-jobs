@@ -19,6 +19,14 @@ class Parser implements ParserInterface
     public function parseContent(string $content)
     {
         $this->crawler->add($content);
-        return trim($this->crawler->filter('h1')->text());
+
+        $nodes = $this->crawler->filter('.card.job-link')->each(function (Crawler $node, $i) {
+            $title =$node->filter('h2 a')->attr('title');
+            $href = $node->filter('h2 a')->attr('href');
+            $company = $node->filter('div')->last()->filter('span')->first()->text();
+            return [$title, $href, $company];
+        });
+        dump($nodes);
+        return 'Hello';
     }
 }
