@@ -2,6 +2,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Contract\ParserInterface;
+use AppBundle\Entity\Job;
 use Symfony\Component\DomCrawler\Crawler;
 
 class Parser implements ParserInterface
@@ -24,9 +25,8 @@ class Parser implements ParserInterface
             $title =$node->filter('h2 a')->attr('title');
             $href = $node->filter('h2 a')->attr('href');
             $company = $node->filter('div')->last()->filter('span')->first()->text();
-            return [$title, $href, $company];
+            return new Job($title, $company, $href);
         });
-        dump($nodes);
-        return 'Hello';
+        return $nodes;
     }
 }

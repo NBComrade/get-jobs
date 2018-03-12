@@ -24,28 +24,28 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data= $form->getData();
+            $data = $form->getData();
+            $query = 'jobs-' . $data->getCity() . '-' . $data->getQuery();
+            $domain = 'https://work.ua/';
+            $jobs = $this->parse($domain, $query);
+
+            return $this->render('default/show.html.twig', ['jobs' => $jobs]);
         }
         return $this->render('default/index.html.twig', ['form' => $form->createView()]);
     }
 
-    /**
-     * @Route("/parse", name="app.parse-data")
-     */
-    public function parseAction(Request $request)
+    public function parse($domain, $query)
     {
         $sender = $this->get('app.sender');
-        $searchQuery = $request->get('search');
-        $city = $request->get('city');
+        $parser = $this->get('app.parser');
         //selector .card.job-link
-        $queryString = 'jobs-' . $city . '-' . $searchQuery;
-        $parseRequest = new \GuzzleHttp\Psr7\Request('GET', 'https://work.ua/' . $queryString);
+
+        $parseRequest = new \GuzzleHttp\Psr7\Request('GET', $domain . $query);
         $content = $sender->sendRequest($parseRequest, function (ResponseInterface $response) {
             return $response->getBody();
         });
-        $parser = $this->get('app.parser');
-        $gitHub = $parser->parseContent($content);
 
-        return new Response($gitHub);
+        return $parser->parseContent($content);
+
     }
 }
