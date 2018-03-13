@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <main class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+
+                {{ form_row(form.domain, {'attr' : {'class' : 'form-control'}}) }}
+                {{ form_row(form.title, {'attr' : {'class' : 'form-control'}}) }}
+                {{ form_row(form.link, {'attr' : {'class' : 'form-control'}}) }}
+                {{ form_row(form.company, {'attr' : {'class' : 'form-control'}}) }}
+                {{ form_row(form.date, {'attr' : {'class' : 'form-control'}}) }}
+                {{ form_row(form.image, {'attr' : {'class' : 'form-control'}}) }}
+
+                {{ form_row(form.save, { 'label': 'Send', 'attr' : {'class' : 'btn btn-primary'} }) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </main>
+{% endblock %}
