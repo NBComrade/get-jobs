@@ -3,6 +3,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Contract\ParserInterface;
 use AppBundle\Entity\Job;
+use AppBundle\Repository\SearchSettingRepository;
 use Symfony\Component\DomCrawler\Crawler;
 
 class Parser implements ParserInterface
@@ -12,19 +13,25 @@ class Parser implements ParserInterface
      */
     private $crawler;
 
-    public function __construct(Crawler $crawler)
+    /**
+     * @var SearchSettingRepository
+     */
+    private $settingRepository;
+
+    public function __construct(Crawler $crawler, SearchSettingRepository $settingRepository)
     {
         $this->crawler = $crawler;
+        $this->settingRepository = $settingRepository;
     }
 
     public function parseContent(string $content)
     {
         $this->crawler->add($content);
-
-        $nodes = $this->crawler->filter('.card.job-link')->each(function (Crawler $node, $i) {
-            $title =$node->filter('h2 a')->attr('title');
-            $href = $node->filter('h2 a')->attr('href');
-            $company = $node->filter('div')->last()->filter('span')->first()->text();
+        $setting = $this->settingRepository->getById(1);
+        $nodes = $this->crawler->filter($setting->cart)->each(function (Crawler $node) use ($setting) {
+            $title =$node->filter($setting->title)->text();
+            $href = $node->filter($setting->link)->attr('href');
+            $company = $node->filter($setting->company)->text();
             return new Job($title, $company, $href);
         });
         return $nodes;

@@ -27,9 +27,8 @@ class DefaultController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $query = 'jobs-' . $data->getCity() . '-' . $data->getQuery();
-            $domain = 'https://work.ua/';
-            $jobs = $this->parse($domain, $query);
+            $url = $this->configureUrl($data);
+            $jobs = $this->parse($url);
 
             return $this->render('default/show.html.twig', ['jobs' => $jobs]);
         }
@@ -54,18 +53,24 @@ class DefaultController extends Controller
         return $this->render('default/configure.html.twig', ['form' => $form->createView()]);
     }
 
-    public function parse($domain, $query)
+    public function parse($url)
     {
         $sender = $this->get('app.sender');
         $parser = $this->get('app.parser');
         //selector .card.job-link
 
-        $parseRequest = new \GuzzleHttp\Psr7\Request('GET', $domain . $query);
+        $parseRequest = new \GuzzleHttp\Psr7\Request('GET', $url);
         $content = $sender->sendRequest($parseRequest, function (ResponseInterface $response) {
             return $response->getBody();
         });
 
         return $parser->parseContent($content);
+    }
 
+    public function configureUrl(ParseData $data)
+    {
+        $em = $this->getDoctrine()->getRepository(SearchSetting::class);
+        $pattern = $em->getDomainWithQuery(1);
+        return sprintf($pattern, $data->getCity(), $data->getQuery(), 3, '07.03.2018');
     }
 }

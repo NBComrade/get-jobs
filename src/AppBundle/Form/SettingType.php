@@ -15,6 +15,7 @@ class SettingType extends AbstractType
     {
         $builder
             ->add('domain', TextType::class)
+            ->add('pattern', TextType::class)
             ->add('title', TextType::class)
             ->add('link', TextType::class)
             ->add('company', TextType::class)
