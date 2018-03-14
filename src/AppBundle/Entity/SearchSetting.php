@@ -17,9 +17,14 @@ class SearchSetting
      private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255, unique=true, nullable=false)
      */
      private $domain;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true, nullable=false)
+     */
+     private $pattern;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -114,5 +119,15 @@ class SearchSetting
     public function setImage($image)
     {
         $this->image = $image;
+    }
+
+    public function getPattern()
+    {
+        return $this->pattern;
+    }
+
+    public function setPattern($pattern)
+    {
+        $this->pattern = $pattern;
     }
 }
