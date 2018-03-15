@@ -10,18 +10,24 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ParseForm extends AbstractType
+class ParseType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
        $builder
             ->add('query', TextType::class)
-            ->add('city', TextType::class)
+           ->add('city', ChoiceType::class, [
+               'choices'  => [ //todo hardcode - move to settings
+                   'Kiev' => '1',
+                   'Kharkov' => '21',
+                   'Poltava' => '17',
+               ],
+           ])
             ->add('days', ChoiceType::class, [
-                'choices'  => [
-                    '1 day' => 'hello world',
-                    '7 day' => 'word hello',
+                'choices'  => [ //todo hardcode - move to settings to
+                    '1 day' => '2',
+                    '7 day' => '3',
                 ],
             ])
             ->add('save', SubmitType::class)

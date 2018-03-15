@@ -29,6 +29,11 @@ class SearchSetting
     /**
      * @ORM\Column(type="string", nullable=false)
      */
+    private $cart;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
      private $title;
 
     /**
@@ -129,5 +134,15 @@ class SearchSetting
     public function setPattern($pattern)
     {
         $this->pattern = $pattern;
+    }
+
+    public function getCart()
+    {
+        return $this->cart;
+    }
+
+    public function setCart($cart)
+    {
+        $this->cart = $cart;
     }
 }

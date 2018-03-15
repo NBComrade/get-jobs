@@ -40,9 +40,9 @@ services:
     app.sender:
         class: AppBundle\Service\Sender
         public: true
-        arguments: ["@guzzle.client"]
+        arguments: ["@guzzle.client", "@doctrine.orm.entity_manager"]
 
     app.parser:
         class: AppBundle\Service\Parser
         public: true
-        arguments: ["@symfony.crawler"]
+        arguments: ["@symfony.crawler", "@doctrine.orm.entity_manager"]

@@ -6,7 +6,7 @@
             <div class="com-md-12 jobs-list-wrapper">
                 {% for job  in jobs %}
                     <div class="single-job">
-                        <p><a class="job-link" href="http://work.ua{{ job.href }}">{{ job.title }}</a></p>
+                        <p><a class="job-link" href="{{ job.href }}">{{ job.title }}</a></p>
                         <p class="job-company-title">{{ job.company }}</p>
                     </div>
                 {% endfor %}

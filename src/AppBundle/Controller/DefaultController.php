@@ -4,7 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\ParseData;
 use AppBundle\Entity\SearchSetting;
-use AppBundle\Form\ParseForm;
+use AppBundle\Form\ParseType;
 use AppBundle\Form\SettingType;
 use Psr\Http\Message\ResponseInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -22,14 +22,12 @@ class DefaultController extends Controller
     public function indexAction(Request $request) : Response
     {
         $parseForm = new ParseData();
-        $form = $this->createForm(ParseForm::class, $parseForm);
+        $form = $this->createForm(ParseType::class, $parseForm);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $url = $this->configureUrl($data);
-            $jobs = $this->parse($url);
-
+            $jobs = $this->parse($data);
             return $this->render('default/show.html.twig', ['jobs' => $jobs]);
         }
         return $this->render('default/index.html.twig', ['form' => $form->createView()]);
@@ -53,24 +51,16 @@ class DefaultController extends Controller
         return $this->render('default/configure.html.twig', ['form' => $form->createView()]);
     }
 
-    public function parse($url)
+    public function parse($data)
     {
         $sender = $this->get('app.sender');
         $parser = $this->get('app.parser');
-        //selector .card.job-link
-
+        $url = $sender->configureUrl($data);
         $parseRequest = new \GuzzleHttp\Psr7\Request('GET', $url);
         $content = $sender->sendRequest($parseRequest, function (ResponseInterface $response) {
             return $response->getBody();
         });
 
         return $parser->parseContent($content);
-    }
-
-    public function configureUrl(ParseData $data)
-    {
-        $em = $this->getDoctrine()->getRepository(SearchSetting::class);
-        $pattern = $em->getDomainWithQuery(1);
-        return sprintf($pattern, $data->getCity(), $data->getQuery(), 3, '07.03.2018');
     }
 }

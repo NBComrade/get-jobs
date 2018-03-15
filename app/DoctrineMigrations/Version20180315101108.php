@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20180314102337 extends AbstractMigration
+class Version20180315101108 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -19,7 +19,7 @@ class Version20180314102337 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'sqlite', 'Migration can only be executed safely on \'sqlite\'.');
 
         $this->addSql('CREATE TABLE featured_jobs (id INTEGER NOT NULL, title VARCHAR(255) NOT NULL, link VARCHAR(255) NOT NULL, company VARCHAR(255) DEFAULT NULL, image VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE TABLE search_settings (id INTEGER NOT NULL, domain VARCHAR(255) NOT NULL, pattern VARCHAR(255) NOT NULL, title VARCHAR(255) NOT NULL, link VARCHAR(255) NOT NULL, company VARCHAR(255) NOT NULL, date VARCHAR(255) DEFAULT NULL, image VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE search_settings (id INTEGER NOT NULL, domain VARCHAR(255) NOT NULL, pattern VARCHAR(255) NOT NULL, cart VARCHAR(255) NOT NULL, title VARCHAR(255) NOT NULL, link VARCHAR(255) NOT NULL, company VARCHAR(255) NOT NULL, date VARCHAR(255) DEFAULT NULL, image VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_F5120B70A7A91E0B ON search_settings (domain)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_F5120B70A3BCFC8E ON search_settings (pattern)');
     }
