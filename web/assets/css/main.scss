@@ -1,8 +1,17 @@
-header{
+html body {
+  background: #F5F5F5!important;
+  font-family: 'Mina' !important;
+}
+.header{
   .main-header{
-    font-weight: bold;
     font-size: 3.5em;
   }
+  .main-logo-image{
+    width: 30%;
+  }
+}
+.submit-button{
+
 }
 
 // Adaptive

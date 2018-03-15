@@ -5,15 +5,16 @@
         <title>{% block title %}Parse perfect job!{% endblock %}</title>
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('build/app.css') }}">
-            <style>
-                body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
-            </style>
+            <link href="https://fonts.googleapis.com/css?family=Mina" rel="stylesheet">
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        <header class="text-center pt-4 pb-4">
-            <h1 class="main-header">Hi! Are you ready for parsing?</h1>
+        <header class="text-center pt-4 pb-4 header">
+            <div class="main-logo">
+                <img class="main-logo-image" src="{{ asset('assets/images/jobs.png') }}" alt="main logo">
+            </div>
+            <h1 class="main-header">Hi! Are you ready for parsing jobs?</h1>
         </header>
         {% block body %}{% endblock %}
         <footer>
