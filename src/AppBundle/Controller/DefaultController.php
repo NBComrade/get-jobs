@@ -60,7 +60,6 @@ class DefaultController extends Controller
         $content = $sender->sendRequest($parseRequest, function (ResponseInterface $response) {
             return $response->getBody();
         });
-
         return $parser->parseContent($content);
     }
 }

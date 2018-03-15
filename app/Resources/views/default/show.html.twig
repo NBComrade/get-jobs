@@ -3,11 +3,12 @@
 {% block body %}
     <main class="container">
         <div class="row">
-            <div class="com-md-12 jobs-list-wrapper">
+            <div class="col-md-12 jobs-list-wrapper">
                 {% for job  in jobs %}
                     <div class="single-job">
                         <p><a class="job-link" href="{{ job.href }}">{{ job.title }}</a></p>
                         <p class="job-company-title">{{ job.company }}</p>
+                        <p class="job-date">{{ job.date }}</p>
                     </div>
                 {% endfor %}
             </div>

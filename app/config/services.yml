@@ -45,4 +45,4 @@ services:
     app.parser:
         class: AppBundle\Service\Parser
         public: true
-        arguments: ["@symfony.crawler", "@doctrine.orm.entity_manager"]
+        arguments: ["@symfony.crawler", "@doctrine.orm.entity_manager", "@app.sender"]
