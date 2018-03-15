@@ -19,10 +19,12 @@ class Parser implements ParserInterface
      * @var EntityManager
      */
     private $entityManager;
+
     /**
      * @var Sender
      */
     private $sender;
+
     /**
      * @array
      * Result of parsing
@@ -36,31 +38,49 @@ class Parser implements ParserInterface
         $this->sender = $sender;
     }
 
-    public function parseContent(string $content)
+    public function parseContent(string $content, $id = 1) //todo magic number must remove
     {
         $this->crawler->add($content);
-        $repository= $this->entityManager->getRepository(SearchSetting::class);
-        $setting = $repository->getById(1); //todo magic number must remove
+        $setting = $this->configureCurrentSetting($id);
         $nextLink = $this->crawler->filter('.nextbtn a');
 
         $nodes = $this->crawler->filter($setting->getCart())->each(function (Crawler $node) use ($setting) {
-            $title =$node->filter($setting->getTitle())->text();
-            $href = $node->filter($setting->getLink())->attr('href');
-            $company = $node->filter($setting->getCompany())->text();
-            $url = $setting->getDomain() . $href;
-            return new Job($title, $company, $url);
+            return $this->parseSingleCart($node, $setting);
         });
-        $this->jobs = array_merge($this->jobs, $nodes);
-        $this->crawler->clear(); // crawler need clear for recursive call
-        if ($nextLink->count()) {
-            $url = $setting->getDomain() . $nextLink->attr('href');
-            $parseRequest = new \GuzzleHttp\Psr7\Request('GET', $url);
-            $content = $this->sender->sendRequest($parseRequest, function (ResponseInterface $response) {
-                return $response->getBody();
-            });
 
-            $this->parseContent($content);
+        $this->jobs = array_merge($this->jobs, $nodes);
+
+        if ($nextLink->count()) {
+            $this->crawler->clear(); // crawler need clear for recursive call
+            $url = $setting->getDomain() . $nextLink->attr('href');
+            $this->parseContentRecursive($url);
         }
+
         return $this->jobs;
+    }
+
+    protected function parseSingleCart(Crawler $node, SearchSetting $setting) : Job
+    {
+        $title =$node->filter($setting->getTitle())->text();
+        $href = $node->filter($setting->getLink())->attr('href');
+        $company = $node->filter($setting->getCompany())->text();
+        $url = $setting->getDomain() . $href;
+        return new Job($title, $company, $url);
+    }
+
+    protected function parseContentRecursive(string $url)
+    {
+        $parseRequest = new \GuzzleHttp\Psr7\Request('GET', $url);
+        $content = $this->sender->sendRequest($parseRequest, function (ResponseInterface $response) {
+            return $response->getBody();
+        });
+
+        $this->parseContent($content);
+    }
+
+    protected function configureCurrentSetting(int $id)
+    {
+        $repository= $this->entityManager->getRepository(SearchSetting::class);
+        return $repository->getById($id);
     }
 }
