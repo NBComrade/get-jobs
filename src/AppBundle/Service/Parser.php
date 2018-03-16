@@ -42,7 +42,7 @@ class Parser implements ParserInterface
     {
         $this->crawler->add($content);
         $setting = $this->configureCurrentSetting($id);
-        $nextLink = $this->crawler->filter('.nextbtn a');
+        $nextLink = $this->crawler->filter($setting->getNext());
 
         $nodes = $this->crawler->filter($setting->getCart())->each(function (Crawler $node) use ($setting) {
             return $this->parseSingleCart($node, $setting);
@@ -64,8 +64,14 @@ class Parser implements ParserInterface
         $title =$node->filter($setting->getTitle())->text();
         $href = $node->filter($setting->getLink())->attr('href');
         $company = $node->filter($setting->getCompany())->text();
+        $image = $node->filter($setting->getImage());
+        if ($image->count()) {
+            $image = $image->attr('src');
+        } else {
+            $image = null;
+        }
         $url = $setting->getDomain() . $href;
-        return new Job($title, $company, $url);
+        return new Job($title, $company, $url, $date = null, $image);
     }
 
     protected function parseContentRecursive(string $url)

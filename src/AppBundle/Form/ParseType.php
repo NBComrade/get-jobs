@@ -16,7 +16,7 @@ class ParseType extends AbstractType
     {
 
        $builder
-            ->add('query', TextType::class)
+           ->add('query', TextType::class)
            ->add('city', ChoiceType::class, [
                'choices'  => [ //todo hardcode - move to settings
                    'Kiev' => '1',

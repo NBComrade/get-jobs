@@ -2,6 +2,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SearchSettingRepository")
@@ -18,36 +19,43 @@ class SearchSetting
 
     /**
      * @ORM\Column(type="string", length=255, unique=true, nullable=false)
+     * @Assert\NotBlank()
      */
      private $domain;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true, nullable=false)
+     * @Assert\NotBlank()
      */
      private $pattern;
 
     /**
      * @ORM\Column(type="string", nullable=false)
+     * @Assert\NotBlank()
      */
     private $cart;
 
     /**
      * @ORM\Column(type="string", nullable=false)
+     * @Assert\NotBlank()
      */
      private $title;
 
     /**
      * @ORM\Column(type="string", nullable=false)
+     * @Assert\NotBlank()
      */
     private $link;
 
     /**
      * @ORM\Column(type="string", nullable=false)
+     * @Assert\NotBlank()
      */
     private $company;
 
     /**
      * @ORM\Column(type="string", nullable=false)
+     * @Assert\NotBlank()
      */
     private $next;
 

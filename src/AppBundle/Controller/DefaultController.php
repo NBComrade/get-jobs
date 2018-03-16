@@ -12,12 +12,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class DefaultController extends Controller
 {
     /**
      * @Route("/", name="app.homepage")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @return Response
      */
     public function indexAction(Request $request) : Response
     {
@@ -36,6 +39,8 @@ class DefaultController extends Controller
     /**
      * @Route("/configure", name="app.configure")
      * @Method({"GET", "POST"})
+     * @param Request $request
+     * @return Response
      */
     public function configureAction(Request $request) : Response
     {

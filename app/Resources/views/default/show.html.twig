@@ -5,10 +5,18 @@
         <div class="row">
             <div class="col-md-12 jobs-list-wrapper">
                 {% for job  in jobs %}
-                    <div class="single-job">
-                        <p><a class="job-link" href="{{ job.href }}">{{ job.title }}</a></p>
-                        <p class="job-company-title">{{ job.company }}</p>
-                        <p class="job-date">{{ job.date }}</p>
+                    <div class="single-job row">
+                        <div class="col-md-8">
+                            <p><a class="job-link" href="{{ job.href }}">{{ job.title }}</a></p>
+                            <p class="job-company-title">{{ job.company }}</p>
+                            <p class="job-date">{{ job.date }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            {% if job.image %}
+                                <img class="job-image" src="{{ job.image }}" alt="job-image">
+                            {% endif %}
+                        </div>
+
                     </div>
                 {% endfor %}
             </div>
