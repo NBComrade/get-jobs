@@ -36,6 +36,6 @@ class Sender implements SenderInterface
     {
         $repository = $this->entityManager->getRepository(SearchSetting::class);
         $pattern = $repository->getDomainWithQuery(1);
-        return sprintf($pattern, $data->getCity(), $data->getQuery(), $data->getDays(), '08.03.2018');
+        return sprintf($pattern, $data->getCity(), $data->getQuery(), $data->getDays());
     }
 }

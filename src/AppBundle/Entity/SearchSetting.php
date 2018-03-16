@@ -47,6 +47,11 @@ class SearchSetting
     private $company;
 
     /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    private $next;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      */
     private $date;
@@ -144,5 +149,15 @@ class SearchSetting
     public function setCart($cart)
     {
         $this->cart = $cart;
+    }
+
+    public function getNext()
+    {
+        return $this->next;
+    }
+
+    public function setNext($next)
+    {
+        $this->next = $next;
     }
 }

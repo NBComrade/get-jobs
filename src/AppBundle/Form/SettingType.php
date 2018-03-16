@@ -20,6 +20,7 @@ class SettingType extends AbstractType
             ->add('title', TextType::class)
             ->add('link', TextType::class)
             ->add('company', TextType::class)
+            ->add('next', TextType::class)
             ->add('date', TextType::class)
             ->add('image', TextType::class)
             ->add('save', SubmitType::class)
