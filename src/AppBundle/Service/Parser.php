@@ -64,14 +64,10 @@ class Parser implements ParserInterface
         $title =$node->filter($setting->getTitle())->text();
         $href = $node->filter($setting->getLink())->attr('href');
         $company = $node->filter($setting->getCompany())->text();
-        $image = $node->filter($setting->getImage());
-        if ($image->count()) {
-            $image = $image->attr('src');
-        } else {
-            $image = null;
-        }
+        $image = $this->parseImage($node->filter($setting->getImage()));
+        $date = $this->parseDate($node->filter($setting->getDate()));
         $url = $setting->getDomain() . $href;
-        return new Job($title, $company, $url, $date = null, $image);
+        return new Job($title, $company, $url, $date, $image);
     }
 
     protected function parseContentRecursive(string $url)
@@ -88,5 +84,21 @@ class Parser implements ParserInterface
     {
         $repository= $this->entityManager->getRepository(SearchSetting::class);
         return $repository->getById($id);
+    }
+
+    protected function parseImage(Crawler $node)
+    {
+        if ($node->count()) {
+            return $node->attr('src');
+        }
+        return null;
+    }
+
+    protected function parseDate(Crawler $node)
+    {
+        if ($node->count()) {
+            return $node->text();
+        }
+        return null;
     }
 }
