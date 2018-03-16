@@ -1,9 +1,9 @@
 <?php
-namespace AppBundle\Entity;
+namespace AppBundle\DTO;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class ParseData
+class JobQuery
 {
     /**
      * @Assert\NotBlank()
@@ -25,7 +25,6 @@ class ParseData
     {
         $this->query = $query;
     }
-
 
     public function getCity()
     {

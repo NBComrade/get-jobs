@@ -2,7 +2,7 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Entity\ParseData;
+use AppBundle\DTO\JobQuery;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -37,7 +37,7 @@ class ParseType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ParseData::class,
+            'data_class' => JobQuery::class,
         ]);
     }
 

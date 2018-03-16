@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Entity;
+namespace AppBundle\DTO;
 
 class Job
 {

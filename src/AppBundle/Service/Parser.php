@@ -2,7 +2,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Contract\ParserInterface;
-use AppBundle\Entity\Job;
+use AppBundle\DTO\Job;
 use AppBundle\Entity\SearchSetting;
 use Doctrine\ORM\EntityManager;
 use Psr\Http\Message\ResponseInterface;

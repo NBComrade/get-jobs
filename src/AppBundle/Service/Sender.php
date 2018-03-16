@@ -3,7 +3,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Contract\SenderInterface;
-use AppBundle\Entity\ParseData;
+use AppBundle\DTO\JobQuery;
 use AppBundle\Entity\SearchSetting;
 use Doctrine\ORM\EntityManager;
 use GuzzleHttp\ClientInterface;
@@ -32,7 +32,7 @@ class Sender implements SenderInterface
         return $promise->wait();
     }
 
-    public function configureUrl(ParseData $data)
+    public function configureUrl(JobQuery $data)
     {
         $repository = $this->entityManager->getRepository(SearchSetting::class);
         $pattern = $repository->getDomainWithQuery(1);
