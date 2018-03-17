@@ -16,6 +16,7 @@ class SearchSettingRepository extends EntityRepository
     public function getDomainWithQuery($id)
     {
         $setting = $this->getById($id);
+
         if (empty($setting)) {
             throw new \DomainException("There are not enabled parsing-settings!");
         }

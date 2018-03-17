@@ -38,7 +38,7 @@ class Parser implements ParserInterface
         $this->sender = $sender;
     }
 
-    public function parseContent(string $content, $id = 1) //todo magic number must remove
+    public function parseContent(string $content, int $id = 1) : array //todo magic number must remove
     {
         $this->crawler->add($content);
         $setting = $this->configureCurrentSetting($id);
@@ -61,11 +61,11 @@ class Parser implements ParserInterface
 
     protected function parseSingleCart(Crawler $node, SearchSetting $setting) : Job
     {
-        $title =$node->filter($setting->getTitle())->text();
-        $href = $node->filter($setting->getLink())->attr('href');
-        $company = $node->filter($setting->getCompany())->text();
-        $image = $this->parseImage($node->filter($setting->getImage()));
-        $date = $this->parseDate($node->filter($setting->getDate()));
+        $title = $this->parseText($node->filter($setting->getTitle()));
+        $href = $this->parseAttr($node->filter($setting->getLink()), 'href');
+        $company = $this->parseText($node->filter($setting->getCompany()));
+        $image = $this->parseAttr($node->filter($setting->getImage()), 'src');
+        $date = $this->parseText($node->filter($setting->getDate()));
         $url = $setting->getDomain() . $href;
         return new Job($title, $company, $url, $date, $image);
     }
@@ -86,15 +86,15 @@ class Parser implements ParserInterface
         return $repository->getById($id);
     }
 
-    protected function parseImage(Crawler $node)
+    protected function parseAttr(Crawler $node, $attrName)
     {
         if ($node->count()) {
-            return $node->attr('src');
+            return $node->attr($attrName);
         }
         return null;
     }
 
-    protected function parseDate(Crawler $node)
+    protected function parseText(Crawler $node)
     {
         if ($node->count()) {
             return $node->text();
