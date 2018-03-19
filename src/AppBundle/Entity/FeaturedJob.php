@@ -34,7 +34,13 @@ class FeaturedJob
     /**
      * @ORM\Column(type="string", nullable=true)
      */
+    private $date;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $image;
+
 
     public function getId()
     {
@@ -84,5 +90,15 @@ class FeaturedJob
     public function setImage($image)
     {
         $this->image = $image;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    public function setDate($date)
+    {
+        $this->date = $date;
     }
 }

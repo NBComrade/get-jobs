@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -55,7 +56,7 @@ class DefaultController extends Controller
         return $this->render('default/configure.html.twig', ['form' => $form->createView()]);
     }
 
-    public function parse($data)
+    private function parse($data)
     {
         $sender = $this->get('app.sender');
         $parser = $this->get('app.parser');
@@ -65,5 +66,21 @@ class DefaultController extends Controller
             return $response->getBody();
         });
         return $parser->parseContent($content);
+    }
+
+    /**
+     * @Route("/add-favorite", name="app.add-favorite")
+     * @Method({"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function addFavoriteAction(Request $request) : JsonResponse
+    {
+        if($request->request->get('data')){
+            //make something curious, get some unbelieveable data
+            $arrData = ['output' => 'here the result which will appear in div'];
+            return new JsonResponse($arrData);
+        }
+        return null;
     }
 }

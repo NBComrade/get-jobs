@@ -29,10 +29,17 @@ html body {
 .jobs-list-wrapper{
   .single-job{
     padding-top:10px;
+    padding-bottom:10px;
     border-top: 1px solid rgba(0,0,0,.12);
     border-bottom: 1px solid rgba(0,0,0,.12);
   }
 }
+.add-favorite{
+  padding-top: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 // Adaptive
 @media (max-width: 356px) {
   .header{
